@@ -1,16 +1,15 @@
-document.addEventListener("DOMContentLoaded", function () {
-  const arrCards = []; //массив карточек
+document.addEventListener('DOMContentLoaded', function () {
+  const arrCards = [];
   const openCard = [];
-  let cards = document.createElement("div");
-  let form = document.createElement("form");
-  let input = document.createElement("input");
-  let timeGroup = document.createElement("div");
-  let labelTime = document.createElement("span");
-  let time = document.createElement("span");
-  let gameOver = document.createElement("span");
-  let restart = document.createElement("button");
+  let cards = document.createElement('div');
+  let form = document.createElement('form');
+  let input = document.createElement('input');
+  let timeGroup = document.createElement('div');
+  let labelTime = document.createElement('span');
+  let time = document.createElement('span');
+  let gameOver = document.createElement('span');
+  let restart = document.createElement('button');
   let secund;
-  //перемешивание карточек
   function shuffleArr(arr) {
     let j, temp;
     for (let i = arr.length - 1; i > 0; i--) {
@@ -22,12 +21,10 @@ document.addEventListener("DOMContentLoaded", function () {
     return arr;
   }
 
-  //создание карточек в кол-ве amountCard
   function createCards(amountCard) {
-    cards.classList.add("cards");
+    cards.classList.add('cards');
     let numberCard = 0;
 
-    //создание массива с парными идентификаторами
     for (let amount = 0; amount < amountCard; amount++) {
       if (!(arrCards.length % 2)) {
         numberCard += 1;
@@ -37,38 +34,36 @@ document.addEventListener("DOMContentLoaded", function () {
 
     shuffleArr(arrCards);
 
-    //добавление карточек с парными идентификаторами
     for (let amount = 0; amount < amountCard; amount++) {
-      let card = document.createElement("div");
-      let span = document.createElement("span");
-      card.classList.add("card");
-      card.classList.add("visible_none");
+      let card = document.createElement('div');
+      let span = document.createElement('span');
+      card.classList.add('card');
+      card.classList.add('visible_none');
       cards.append(card);
       card.append(span);
       span.textContent = arrCards[amount];
     }
 
     document.body.append(cards);
-    console.log(arrCards); //вывод массива карточек в начале игры
     eventCard();
   }
 
   function createTimer() {
-    gameOver.textContent = "Поражение! Время вышло!";
-    restart.textContent = "Попробовать снова";
-    let statis = document.createElement("span");
+    gameOver.textContent = 'Поражение! Время вышло!';
+    restart.textContent = 'Попробовать снова';
+    let statis = document.createElement('span');
     secund = input.value * 6;
     labelTime.textContent = `Времени осталось: ${secund}`;
 
-    restart.classList.add("button");
-    timeGroup.classList.add("time-group");
-    labelTime.classList.add("label_end");
+    restart.classList.add('button');
+    timeGroup.classList.add('time-group');
+    labelTime.classList.add('label_end');
 
     timeGroup.append(labelTime);
     timeGroup.append(time);
     document.body.append(timeGroup);
 
-    restart.addEventListener("click", function () {
+    restart.addEventListener('click', function () {
       location.reload();
     });
 
@@ -83,13 +78,11 @@ document.addEventListener("DOMContentLoaded", function () {
         clearInterval(timer);
         labelTime.remove();
         cards.remove();
-        time.classList.add("game-over");
+        time.classList.add('game-over');
         time.append(gameOver);
         time.append(statis);
-        statis.textContent = `Открыто пар: ${openCard.length} из ${
-          arrCards.length / 2
-        }`;
-        statis.classList.add("statis");
+        statis.textContent = `Открыто пар: ${openCard.length} из ${arrCards.length / 2}`;
+        statis.classList.add('statis');
         time.append(restart);
       }
     }
@@ -99,22 +92,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
   //
   function startGame() {
-    let buttonStart = document.createElement("button");
-    let label = document.createElement("label");
-    let error = document.createElement("span");
-    form.classList.add("form");
-    input.classList.add("input");
-    buttonStart.classList.add("button");
-    label.classList.add("label_start");
-    error.classList.add("error");
+    let buttonStart = document.createElement('button');
+    let label = document.createElement('label');
+    let error = document.createElement('span');
+    form.classList.add('form');
+    input.classList.add('input');
+    buttonStart.classList.add('button');
+    label.classList.add('label_start');
+    error.classList.add('error');
 
-    // input.placeholder = "Число";
     input.required = true;
-    input.type = "number";
-    input.max = "50";
-    input.min = "2";
-    label.textContent = "Введите кол-во пар карточек (2-50):";
-    buttonStart.textContent = "Поехали!";
+    input.type = 'number';
+    input.max = '50';
+    input.min = '2';
+    label.textContent = 'Введите кол-во пар карточек (2-50):';
+    buttonStart.textContent = 'Поехали!';
 
     form.append(label);
     form.append(input);
@@ -122,27 +114,23 @@ document.addEventListener("DOMContentLoaded", function () {
     form.append(error);
     document.body.append(form);
 
-    form.addEventListener("submit", function (e) {
+    form.addEventListener('submit', function (e) {
       e.preventDefault();
       let amountCards = input.value;
       let sizeCard = 600;
 
-      error.classList.remove("error_visible");
-      error.classList.add("error_no_visible");
+      error.classList.remove('error_visible');
+      error.classList.add('error_no_visible');
 
       createTimer();
 
       createCards(amountCards * 2);
       form.remove();
 
-      //рассчет размера карточки от их кол-ва
       for (let num = 0; num < amountCards; ) {
-        if (
-          document.body.clientHeight - document.documentElement.clientHeight >
-          0
-        ) {
+        if (document.body.clientHeight - document.documentElement.clientHeight > 0) {
           sizeCard -= 5;
-          cards.style.setProperty("--size-card", sizeCard + "px");
+          cards.style.setProperty('--size-card', sizeCard + 'px');
         } else {
           num += 1;
         }
@@ -151,40 +139,35 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function eventCard() {
-    let card = document.querySelectorAll(".card");
+    let card = document.querySelectorAll('.card');
     let cardActive = false;
     let numCard = null;
     let contentCardActive = null;
     card.forEach(function (cardClick) {
-      cardClick.addEventListener("click", function () {
+      cardClick.addEventListener('click', function () {
         if (!cardActive) {
-          // console.log(`нажата первая карточка ${cardClick.textContent}`);
-          cardClick.classList.add("open_animation");
+          cardClick.classList.add('open_animation');
 
           function openOneCard() {
-            cardClick.classList.remove("visible_none");
+            cardClick.classList.remove('visible_none');
             numCard = cardClick.textContent;
-            cardClick.classList.add("card_active");
+            cardClick.classList.add('card_active');
             cardActive = !cardActive;
-            cardClick.classList.add("pointer");
+            cardClick.classList.add('pointer');
             contentCardActive = cardClick.textContent;
           }
           setTimeout(() => openOneCard(), 150);
         } else if (cardActive) {
-          // console.log(`нажата вторая карточка ${cardClick.textContent}`);
-          cardClick.classList.add("open_animation");
+          cardClick.classList.add('open_animation');
 
           if (cardClick.textContent === numCard) {
-            // console.log("карточки совпадают");
-
             function openTwoCardIdent() {
-              cardClick.classList.add("card_active");
+              cardClick.classList.add('card_active');
               card.forEach(function (el) {
                 if (el.textContent === contentCardActive) {
-                  // console.log(el.textContent);
-                  el.classList.add("cards_open");
-                  el.classList.add("pointer");
-                  el.classList.remove("visible_none");
+                  el.classList.add('cards_open');
+                  el.classList.add('pointer');
+                  el.classList.remove('visible_none');
                 }
               });
             }
@@ -192,44 +175,37 @@ document.addEventListener("DOMContentLoaded", function () {
             setTimeout(() => openTwoCardIdent(), 150);
 
             openCard.push(true);
-            // console.log(openCard);
-
             if (openCard.length == input.value) {
-              console.log("Победа!");
               time.remove();
-              labelTime.classList.add("game-win");
-              labelTime.textContent = `Победа за ${
-                input.value * 6 - secund
-              } сек.`;
-              restart.classList.add("restart");
+              labelTime.classList.add('game-win');
+              labelTime.textContent = `Победа за ${input.value * 6 - secund} сек.`;
+              restart.classList.add('restart');
               timeGroup.append(restart);
             }
           } else {
-            // console.log("Карточки не совпадают");
-
-            cardClick.classList.add("open_animation");
+            cardClick.classList.add('open_animation');
 
             function openTwoCard() {
-              cardClick.classList.remove("visible_none");
-              cardClick.classList.add("card_active");
-              cards.classList.add("pointer");
+              cardClick.classList.remove('visible_none');
+              cardClick.classList.add('card_active');
+              cards.classList.add('pointer');
             }
             setTimeout(() => openTwoCard(), 150);
 
             function closeCard() {
-              cardClick.classList.add("visible_none");
+              cardClick.classList.add('visible_none');
 
               card.forEach(function (el) {
                 if (el.textContent === contentCardActive) {
-                  cardClick.classList.remove("card_active");
-                  cardClick.classList.remove("open_animation");
-                  el.classList.remove("card_active");
-                  el.classList.remove("pointer");
-                  el.classList.add("visible_none");
-                  el.classList.remove("open_animation");
+                  cardClick.classList.remove('card_active');
+                  cardClick.classList.remove('open_animation');
+                  el.classList.remove('card_active');
+                  el.classList.remove('pointer');
+                  el.classList.add('visible_none');
+                  el.classList.remove('open_animation');
                 }
               });
-              cards.classList.remove("pointer");
+              cards.classList.remove('pointer');
             }
             setTimeout(() => closeCard(), 700);
           }
